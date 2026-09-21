@@ -1331,134 +1331,128 @@ body {
 .royal-back {
     transform: rotateY(180deg);
 
-    padding: 40px 30px;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
 
+    /* The four photos now cover the ENTIRE back of the certificate. */
     background:
-        radial-gradient(
-            circle at center,
-            #FFF9F0 0%,
-            #EBCFAE 52%,
-            #8A481F 150%
-        );
+        linear-gradient(rgba(45,23,14,.40), rgba(45,23,14,.40)),
+        url("Image 8.jpeg") left top / 50% 50% no-repeat,
+        url("images9.jpeg") right top / 50% 50% no-repeat,
+        url("image4.jpg") left bottom / 50% 50% no-repeat,
+        url("image6.jpeg") right bottom / 50% 50% no-repeat;
+
+    background-color: var(--deep-chocolate);
+}
+
+/* Soft dark layer keeps all certificate wording readable over the photos. */
+.royal-back::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        linear-gradient(135deg, rgba(45,23,14,.34), rgba(0,0,0,.22), rgba(45,23,14,.34));
 }
 
 .royal-back::before {
     content: '';
-
     position: absolute;
-
     inset: 14px;
-
-    border:
-        1px solid rgba(213,168,76,.65);
-
+    z-index: 5;
+    border: 2px solid rgba(213,168,76,.85);
     pointer-events: none;
+    box-shadow: inset 0 0 25px rgba(0,0,0,.28);
 }
 
 .royal-back-title {
     font-family: 'Cinzel', serif;
-
-    font-size: 14px;
-
+    font-size: clamp(12px, 2.5vw, 17px);
     letter-spacing: 4px;
-
-    color: var(--deep-caramel);
-
-    margin-bottom: 24px;
-
+    color: var(--ivory);
     font-weight: 600;
-
-    position: relative;
-
-    z-index: 2;
+    position: absolute;
+    top: 34px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 88%;
+    text-align: center;
+    z-index: 10;
+    text-shadow: 0 2px 7px #000, 0 0 14px #000;
 }
 
+/* The old four boxes are hidden because the photos are now the full background. */
 .royal-photo-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-    gap: 18px;
-
-    max-width: 610px;
-
-    margin: 0 auto;
-
-    position: relative;
-
-    z-index: 2;
+    display: none;
 }
 
 .royal-photo-frame {
-    width: 100%;
-
-    height: 260px;
-
-    padding: 7px;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--champagne),
-            var(--light-champagne),
-            var(--caramel),
-            var(--champagne)
-        );
-
-    box-shadow:
-        0 12px 28px rgba(45,23,14,.25),
-        0 0 15px rgba(213,168,76,.20);
-
-    overflow: hidden;
-}
-
-.royal-photo-frame img {
-    width: 100%;
-
-    height: 100%;
-
-    display: block;
-
-    object-fit: contain;
-
-    border:
-        3px solid var(--ivory);
-
-    background:
-        var(--deep-chocolate);
+    display: none;
 }
 
 .royal-back-caption {
-    margin-top: 25px;
-
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 76%;
+    margin: 0;
+    padding: 22px 20px;
     font-family: 'Playfair Display', serif;
-
     font-style: italic;
-
-    font-size: 17px;
-
-    line-height: 1.7;
-
-    color: var(--soft-brown);
-
-    position: relative;
-
-    z-index: 2;
+    font-size: clamp(15px, 3vw, 22px);
+    line-height: 1.75;
+    text-align: center;
+    color: var(--ivory);
+    background: rgba(45,23,14,.42);
+    border: 1px solid rgba(213,168,76,.72);
+    box-shadow: 0 12px 30px rgba(0,0,0,.28), inset 0 0 18px rgba(255,255,255,.04);
+    text-shadow: 0 2px 7px #000;
 }
 
 .royal-turn-hint {
-    margin-top: 22px;
-
+    position: absolute;
+    z-index: 10;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    margin: 0;
     font-family: 'Cinzel', serif;
-
     font-size: 10px;
-
     letter-spacing: 3px;
-
-    color: var(--deep-caramel);
-
+    color: var(--ivory);
+    text-align: center;
     font-weight: 600;
+    text-shadow: 0 2px 6px #000, 0 0 12px #000;
+}
+
+@media (max-width: 600px) {
+    .royal-back-title {
+        top: 27px;
+        font-size: 11px;
+        letter-spacing: 2.5px;
+    }
+
+    .royal-back-caption {
+        width: 82%;
+        padding: 17px 13px;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .royal-turn-hint {
+        bottom: 23px;
+        font-size: 8px;
+        letter-spacing: 2px;
+    }
+
+    .royal-back::before {
+        inset: 9px;
+    }
 }
 
 
@@ -3788,7 +3782,255 @@ iframe {
     }
 }
 
+
+
+/* =========================================================
+   UNIVERSAL PHONE FIT
+   Prevent horizontal overflow and make every card/section fit
+   small phones, large phones and landscape screens.
+========================================================= */
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+img, svg, iframe {
+    max-width: 100%;
+}
+
+.invitation, .section, .hero, .slideshow,
+.royal-certificate-section, .contribution-flip-container,
+.contribution-flip-card, .royal-certificate-wrap {
+    width: 100%;
+    max-width: 100%;
+}
+
+@media (max-width: 600px) {
+    body {
+        font-size: 15px;
+    }
+
+    .section {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+    }
+
+    .section-title {
+        font-size: clamp(24px, 8vw, 38px) !important;
+        line-height: 1.15 !important;
+    }
+
+    .names {
+        font-size: clamp(38px, 13vw, 70px) !important;
+        line-height: 1.05 !important;
+        overflow-wrap: anywhere;
+    }
+
+    .hero-intro, .section-text, .contact-text,
+    .rsvp-text, .gifts-note, .children-note,
+    .contribution-text {
+        width: 100%;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+    }
+
+    /* Certificate: scale the complete front and back without clipping. */
+    .royal-certificate-section .royal-certificate-wrap {
+        width: min(100%, 520px);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .royal-certificate-section .royal-certificate,
+    .royal-certificate-section .royal-face {
+        min-height: clamp(610px, 150vw, 820px) !important;
+    }
+
+    .royal-certificate-section .royal-front {
+        padding: clamp(25px, 7vw, 42px) clamp(14px, 5vw, 24px) clamp(28px, 8vw, 48px) !important;
+    }
+
+    .royal-title {
+        font-size: clamp(20px, 6vw, 34px) !important;
+        line-height: 1.15 !important;
+    }
+
+    .royal-names {
+        font-size: clamp(27px, 9vw, 48px) !important;
+    }
+
+    .royal-message {
+        font-size: clamp(12px, 3.7vw, 17px) !important;
+        line-height: 1.55 !important;
+    }
+
+    .royal-signature {
+        font-size: clamp(9px, 2.8vw, 14px) !important;
+        letter-spacing: clamp(1px, .6vw, 3px) !important;
+    }
+
+    .royal-certificate-section .royal-back {
+        padding: clamp(22px, 6vw, 30px) 10px 28px !important;
+    }
+
+    .royal-photo-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+    }
+
+    .royal-photo-frame {
+        width: 100%;
+        min-width: 0;
+        height: clamp(120px, 34vw, 190px) !important;
+    }
+
+    /* Dress-code flip card always stays inside the viewport. */
+    .contribution-flip-card,
+    .contribution-flip-card.flipped {
+        width: calc(100vw - 28px) !important;
+        max-width: calc(100vw - 28px) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .contribution-flip-card.flipped .contribution-flip-inner,
+    .contribution-flip-card.flipped .contribution-front,
+    .contribution-flip-card.flipped .contribution-back {
+        min-height: clamp(500px, 145vw, 680px) !important;
+    }
+
+    .contribution-back {
+        background-size: contain !important;
+        background-position: center !important;
+    }
+
+    .contribution-back .dress-code-title {
+        max-width: 90%;
+        white-space: normal !important;
+        font-size: clamp(18px, 6vw, 28px) !important;
+        letter-spacing: clamp(2px, 1vw, 4px) !important;
+    }
+
+    /* Slideshow images stay completely inside their frame. */
+    .slideshow, .slide {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .slide img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+}
+
+@media (max-width: 380px) {
+    .section {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    .royal-certificate-section .royal-certificate,
+    .royal-certificate-section .royal-face {
+        min-height: 570px !important;
+    }
+
+    .royal-photo-frame {
+        height: 112px !important;
+        padding: 4px !important;
+    }
+
+    .contribution-flip-card,
+    .contribution-flip-card.flipped {
+        width: calc(100vw - 20px) !important;
+        max-width: calc(100vw - 20px) !important;
+    }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+    .invitation-stage {
+        min-height: 100svh;
+        padding-top: 8px !important;
+        padding-bottom: 8px !important;
+    }
+
+    .invitation-shell {
+        height: 72svh !important;
+        max-height: 76svh !important;
+    }
+
+    .tap-open-below {
+        width: min(30vw, 260px);
+    }
+}
+
 </style>
+
+<style id="dress-code-matched-card-final">
+/* FINAL: opened invitation card follows the dress-code palette exactly.
+   Palette: ivory/white + beige + taupe + champagne gold. */
+.inner-card.canva-card {
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,.92), transparent 38%),
+        linear-gradient(145deg, #fffdf8 0%, #f7efe3 48%, #eadbc7 100%) !important;
+    border: 2px solid #d4af37 !important;
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.95),
+        inset 0 0 0 7px rgba(212,175,55,.13),
+        0 18px 45px rgba(90,62,43,.20) !important;
+}
+
+.inner-card.canva-card .card-kicker,
+.inner-card.canva-card .card-date,
+.inner-card.canva-card .card-close {
+    color: #6b5847 !important;
+}
+
+.inner-card.canva-card .card-title {
+    color: #5a3e2b !important;
+    text-shadow: 0 1px 0 rgba(255,255,255,.85);
+}
+
+.inner-card.canva-card .card-rule {
+    background: #d4af37 !important;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.75);
+}
+
+.inner-card.canva-card .card-details {
+    color: #6b5847 !important;
+}
+
+.inner-card.canva-card::before,
+.inner-card.canva-card::after {
+    color: #b89a62 !important;
+}
+
+/* Keep the actual champagne-glass artwork, but make it harmonise with the
+   ivory/beige/taupe/champagne-gold dress-code theme. */
+.inner-card.canva-card .champagne-celebration-decor {
+    opacity: .25;
+    filter: sepia(.15) saturate(.8) drop-shadow(0 5px 10px rgba(90,62,43,.10));
+}
+
+@media (max-width: 700px) {
+    .inner-card.canva-card {
+        border-width: 2px !important;
+        box-shadow:
+            inset 0 0 0 1px rgba(255,255,255,.95),
+            inset 0 0 0 5px rgba(212,175,55,.12),
+            0 12px 30px rgba(90,62,43,.18) !important;
+    }
+}
+</style>
+
 </head>
 
 
